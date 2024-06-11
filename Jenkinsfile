@@ -16,7 +16,7 @@ pipeline {
                 script {
                     // Пуш имеджа в Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'dockercredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                        sh 'sudo echo "gugafle21" | docker login --username bayshihin --password-stdin'
                         sh 'sudo docker push bayhtml'
                     }
                 }
