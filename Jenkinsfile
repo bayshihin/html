@@ -7,7 +7,7 @@ pipeline {
                 script {
                     // Клонирование репозитория и сборка Docker-образа
                     git 'https://github.com/bayshihin/html'
-                    sh 'docker build -t bayhtml .'
+                    sh 'sudo docker build -t bayhtml .'
                 }
             }
         }
