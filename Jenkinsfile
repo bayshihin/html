@@ -22,14 +22,5 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Second Server') {
-            steps {
-                script {
-                    // Остановка текущего компоуза и запуск нового с обновленным имеджем
-                    sshCommand remote: '46.229.213.138', command: 'docker-compose down'
-                    sshCommand remote: '46.229.213.138', command: 'docker-compose up -d'
-                }
-            }
-        }
     }
 }
