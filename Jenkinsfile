@@ -22,5 +22,17 @@ pipeline {
                 }
             }
         }
+        stage('Deploy on Remote Server') {
+            steps {
+                script {
+                    // Выполнение команд на удаленном сервере
+                    sshagent(['sshremote']) {
+                        sh 'ssh root@46.229.213.138 "cd /root/compose && docker-compose down"'
+                        sh 'ssh root@46.229.213.138 "cd /root/compose && docker-compose up -d"'
+                    }
+                }
+            }
+        }
     }
 }
+
