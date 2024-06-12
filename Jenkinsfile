@@ -5,7 +5,6 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Клонирование репозитория и сборка Docker-образа
                     git 'https://github.com/bayshihin/html'
                     sh 'sudo docker build -t bayshihin/bayhtml .'
                 }
@@ -14,7 +13,6 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Пуш имеджа в Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'dockercredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                         sh 'sudo docker push bayshihin/bayhtml'
@@ -25,10 +23,12 @@ pipeline {
         stage('Deploy on Remote Server') {
             steps {
                 script {
-                    // Выполнение команд на удаленном сервере
-                    sshagent(['sshremote']) {
-                        sh 'ssh root@46.229.213.138 "cd /root/compose && docker-compose down"'
-                        sh 'ssh root@46.229.213.138 "cd /root/compose && docker-compose up -d"'
+                    sshAgent { 
+                        credentialsId 'sshremote'
+                        steps {
+                            ssh serverAddress: '46.229.213.138', user: 'jenkins' {
+                                sh 'cd /root/compose && docker compose down'
+                                sh 'cd /root/compose && docker compose up -d'
                     }
                 }
             }
