@@ -29,10 +29,11 @@ pipeline {
                             ssh serverAddress: '46.229.213.138', user: 'jenkins' {
                                 sh 'cd /root/compose && docker compose down'
                                 sh 'cd /root/compose && docker compose up -d'
+                            }
+                        }
                     }
                 }
             }
         }
     }
 }
-
