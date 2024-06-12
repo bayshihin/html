@@ -22,10 +22,10 @@ pipeline {
         }
         stage('Deploy on Remote Server') {
             steps {
-                withCredentials([sshUsernamePrivateKey(credentialsId: 'sshremote', usernameVariable: 'SSH_USER', privateKeyVariable: 'SSH_KEY')]) {
-                    sshAgent (credentials: ['sshremote']) {
-                        sh "ssh -i $SSH_KEY $SSH_USER@46.229.213.138 'cd /root/compose && docker-compose down'"
-                        sh "ssh -i $SSH_KEY $SSH_USER@46.229.213.138 'cd /root/compose && docker-compose up -d'"
+                sshAgent (credentials: ['sshremote']) {
+                    ssh serverAddress: '46.229.213.138', user: 'root' {
+                        sh 'cd /root/compose && docker-compose down'
+                        sh 'cd /root/compose && docker-compose up -d'
                 }
             }
         }
