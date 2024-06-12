@@ -23,8 +23,8 @@ pipeline {
         stage('Deploy on Remote Server') {
             steps {
                 script {
-                     sh "ssh root@46.229.213.138 'cd /root/compose && docker-compose down'"
-                     sh "ssh root@46.229.213.138 'cd /root/compose && docker-compose up -d'"
+                     sh "sudo ssh -i /root/private.key root@46.229.213.138 'cd /root/compose && docker-compose down'"
+                     sh "sudo ssh -i /root/private.key root@46.229.213.138 'cd /root/compose && docker-compose up -d'"
                 }
             }
         }
